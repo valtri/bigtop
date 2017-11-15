@@ -32,6 +32,8 @@ export DH_OPTIONS
 override_dh_auto_build:
 	mkdir -p distro/downloads
 	env DO_MAVEN_DEPLOY="" FULL_VERSION=${OOZIE_BASE_VERSION} bash -x debian/do-component-build
+	# try to fix dh_strip_nondeterminism Permission denied
+	chmod u+w debian/oozie/usr/lib/oozie/oozie-sharelib.tar.gz
 	mkdir -p debian/tmp
 	tar cf - --exclude=debian/\* . | (cd debian/tmp && tar xf -)
 
